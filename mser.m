@@ -19,7 +19,7 @@ close all
 
 tic
 % Read input image
-img = imread('img/smp_5.jpg');
+img = imread('img/smp_6.jpg');
 height = size(img,1);
 width = size(img,2);
 total_pixels_img = width*height;
@@ -29,9 +29,9 @@ usage = 'segmented';                   % select between segmented or gray scale
 % Parameters to set
 min_area_mser = 1000;
 max_area_mser = 1000000;
-mser_p.delta = 1;
+mser_p.delta = 2;
 mser_p.min_area = 0.00001*width*height;
-mser_p.max_area = 0.5*width*height;
+mser_p.max_area = 0.25*width*height;
 mser_p.max_variation = 0.5;
 mser_p.min_diversity = 0.33;
 color_of_interest = 'blue';             % Options are: red, green, blue
