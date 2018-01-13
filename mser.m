@@ -19,7 +19,7 @@ close all
 
 tic
 % Read input image
-img = imread('img/smp_6.jpg');
+img = imread('img/smp_5.jpg');
 height = size(img,1);
 width = size(img,2);
 total_pixels_img = width*height;
@@ -28,7 +28,7 @@ usage = 'segmented';                   % select between segmented or gray scale
 
 % Parameters to set
 min_area_mser = 1000;
-max_area_mser = 10000;
+max_area_mser = 1000000;
 mser_p.delta = 1;
 mser_p.min_area = 0.00001*width*height;
 mser_p.max_area = 0.5*width*height;
@@ -370,19 +370,6 @@ end
 
 rect = tmp;
 
-% 6) Filtering just the rectangles with some specific area range
-for i=1:size(rect,2)
-  rect(i).height = rect(i).bottom - rect(i).top;
-  rect(i).width = rect(i).right - rect(i).left;
-  rect(i).size = rect(i).height*rect(i).width;
-
-  if (rect(i).size > min_area_mser && rect(i).size < max_area_mser)
-    rect(i).draw = 1;
-  else
-    rect(i).draw = 0;
-  end
-end
-
 subplot(2,2,3);
 imshow(img_selected);
 title(['Original Image (' num2str(width) 'x' num2str(height) ...
@@ -396,6 +383,19 @@ for i=1:size(rect,2)
    rectangle('Position',[rect(i).left rect(i).top width_n  height_n], ...
                                                               'EdgeColor','r');
  end
+end
+
+% 6) Filtering just the rectangles with some specific area range
+for i=1:size(rect,2)
+  rect(i).height = rect(i).bottom - rect(i).top;
+  rect(i).width = rect(i).right - rect(i).left;
+  rect(i).size = rect(i).height*rect(i).width;
+
+  if (rect(i).size > min_area_mser && rect(i).size < max_area_mser)
+    rect(i).draw = 1;
+  else
+    rect(i).draw = 0;
+  end
 end
 
 subplot(2,2,4);
